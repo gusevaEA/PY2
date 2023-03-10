@@ -1,33 +1,57 @@
-class Car:
-    def __init__(self,model: str,color: str,weight: float,number: str,year: int,passangers: int):
-        self.model=model
-        self.color=color
-        self.weight=weight
-        self.number=number
-        self.year=year
-        self.passangers=passangers
+class Book:
+    """ Базовый класс книги. """
+    def __init__(self, name: str, author: str):
+        self.__name = name
+        self.__author = author
+
+    @property
+    def name(self):
+        return self.__name
+
+    @property
+    def author(self):
+        return self.__author
+
     def __str__(self):
-        return f"Автомобиль {self.model}, color {self.color}, number {self.number}, year {self.year}"
+        return f"Книга {self.name}. Автор {self.author}"
 
     def __repr__(self):
-        return f"Автомобиль {self.number}"
+        return f"{self.__class__.__name__}(name={self.name!r}, author={self.author!r})"
 
-    def get_age(self):
-        return 2023-self.year #возвращает возраст автомобиля
 
-    def print_passangers_number(self): #метод печатает максимальное колличество пассажиров
-        print(f'Максимальное количество пассажиров: {self.passangers}')
+class PaperBook(Book):
+    def __init__(self, name: str, author: str, pages: int):
+        super().__init__(name, author)
+        self.pages = pages
 
-class Formula_1car(Car):
-    def __init__(self,model:str,color: str,weight: float,number: str,year: int,passangers: int,competition: str,pilot: str):
-        super().__init__(model,color,weight,number,year,passangers)
-        self.competition=competition
-        self.pilot=pilot
+    @property
+    def pages(self):
+        return self.pages
 
-    def __str__(self):
-        return f"Автомобиль {self.model}, color {self.color}, number {self.number}, competition {self.competition}, pilot {self.pilot},year {self.year}"
+    @pages.setter
+    def pages(self, new_pages):
+        if isinstance(new_pages, int):
+            self.pages = new_pages
+        else:
+            raise ValueError
 
-    def print_passangers_number(self):
-        if self.passangers > 2:
-            print('Осторожно, опасно! Для спортивных машин на Формуле 1 должно быть не больше 2 пассажиров')
-        print(f'Максимальное количество пассажиров: {self.passangers}')
+
+class AudioBook(Book):
+    def __init__(self, name: str, author: str, duration: float):
+        super().__init__(name, author)
+        self.duration = duration
+
+    @property
+    def duration(self):
+        return self.duration
+
+    @duration.setter
+    def duration(self, new_duration):
+        if isinstance(new_duration, float):
+            self.duration = new_duration
+        else:
+            raise ValueError
+
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}(name=--{self.name!r}, author={self.author!r}, duration={self.duration!r})"
